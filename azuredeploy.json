@@ -274,11 +274,7 @@
             "comments" : "Stdout and Stderr can be found /var/lib/waagent/custom-script/download/0/",
             "apiVersion": "2015-06-15",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-				"[reference(variables('publicIPAddressName')).dnsSettings.fqdn]",
-                "[variables('certEmailAddress')]",
-				"[variables('mysqlRootPwd')]",
-				"[variables('guacDBPwd')]"                
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
             ],
             "tags": {
                 "displayName": "nginx/tomcat/mysql/guacamole"
