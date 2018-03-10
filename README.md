@@ -6,7 +6,15 @@ Since Guacamole is accessed via your web browser, you can install Guacamole on a
 
 ## Preface
 
-When the need for a "jump server" arose, I deployed the <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/guacamole-rdp-vnc-gateway-existing-vnet">Apache Guacamole Azure Quick Start Template</a>. This template was a great introduction to Apache Guacamole. However, it leveraged multiple Docker images, and I wasn't certian what other software resided within these containers. The magic behind this template came from a base64 encoded custom data <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/using-cloud-init">Cloud-Init</a> script, which didn't lend intself to my intention of sharing this template and allowing people to easily specify their desired database passwords and configuration without having to decode the script, make the changes, and encode the script. Since the skills required to develop ARM templates are required to obtain MCSE: Cloud Platform and Infrastructure certification, and that I needed to deploy Apache Guacamole, the challenge was on to develop an ARM template that could be reused and was configurable.
+When the need for a "jump server" arose, I deployed the <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/guacamole-rdp-vnc-gateway-existing-vnet">Apache Guacamole Azure Quick Start Template</a>. This template was a great introduction to Apache Guacamole. However, it leveraged multiple Docker images, and I wasn't certian what other software resided within these containers. The magic behind this template came from a base64 encoded custom data <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/using-cloud-init">Cloud-Init</a> script, which didn't lend intself to my intention of sharing this template and allowing people to easily specify their desired database passwords and configuration. Since the skills required to develop ARM templates are required to obtain MCSE: Cloud Platform and Infrastructure certification, and that I needed to deploy Apache Guacamole, the challenge was on to develop an ARM template that could be reused and was configurable.
+
+### Prerequisites
+
+TBD
+
+```
+TBD
+```
 
 ## Deploy to Azure
 
