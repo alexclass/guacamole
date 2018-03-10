@@ -1,4 +1,4 @@
-# guacamole
+# Apache Guacamole for Azure
 ARM Templates and scripts to install Apache Guacamole, Nginx, Tomcat, mySQL, and even a Let's Encrypt SSL certificate
 
 <b>Apache Guacamole</b> is a clientless HTML5 web application that can be used to access your remote servers and desktops via a web browser. All you need is a web browser. It is completely free and open source software.
