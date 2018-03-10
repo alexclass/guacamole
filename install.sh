@@ -20,14 +20,13 @@ while [ "$1" != "" ]; do
     shift
 done
 
-# Get MySQL root password and Guacamole User password
 if [ -n "$argmysqlpwd" ] && [ -n "$argguacpwd" ] && [ -n "$argfqdn" ] && [ -n "$argemail" ]; then
         mysqlrootpassword=$argmysqlpwd
         guacdbuserpassword=$argguacpwd
         certbotfqdn=$argfqdn
         certbotemail=$argemail
 else
-  echo "script arguments are required"
+  echo "Error: You must provide the following script arguments: --mysqlpwd --guacpwd --fqdn --email"
   exit 1
 fi
 
