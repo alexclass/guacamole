@@ -4,7 +4,7 @@
 GUACVERSION="0.9.14"
 
 # Update apt so we can search apt-cache for newest tomcat version supported
-apt update
+apt-get update
 
 # Get script arguments for non-interactive mode
 while [ "$1" != "" ]; do
