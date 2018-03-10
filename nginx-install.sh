@@ -16,11 +16,10 @@ sudo apt-get install nginx -y
 while [ "$1" != "" ]; do
     case $1 in
         -f | --fqdn )       shift
-                                argfqdn="$1"
-                                ;;
-        -e | --email )
-                                shift
-                                argemail="$1"
+                            argfqdn="$1"
+                            ;;
+        -e | --email )      shift
+                            argemail="$1"
     esac
     shift
 done
