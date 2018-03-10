@@ -12,7 +12,7 @@ azuredeploy.json
 * Creates a Ubuntu 16.04 virtual machine
 * Creates a public ip address with your specified dns prefix
 * Creates a Network Security Group that allows incoming traffic on ports 22,80,443.
-* * Ports 8080/8443 are proxied via the Nginx server to Tomcat thus they are not required to be open.
+* *Ports 8080/8443 are proxied via the Nginx server to Tomcat thus they are not required to be open.
 
 ## Deploy to Azure
 
