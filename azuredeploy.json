@@ -1,0 +1,367 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define the name of your Apache Guacamole Virtual Machine."
+            }
+        },
+        "vmDNSPrefix": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_A2_v2",
+            "metadata": {
+                "description": "Define the Compute instance size (e.g. Standard_A2_v2)."
+            }
+        },
+        "vmUsername": {
+            "type": "string",
+            "defaultValue": "vmadmin",
+            "metadata": {
+                "description": "Define the Apache Guacamole Virtual Machine Administrator username."
+            }
+        },
+        "vmSSHPublicKey": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define the SSH Public Key that will be used for SSH authentication.</br></br>Note</br> You can leverage ssh-keygen (Linux) or PuttyGen (Windows) to generate this."
+            }
+        },
+        "vmVnetName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define the name of an existing Virtual Network Name."
+            }
+        },
+        "vmVnetRG": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+            "description": "Define the name of the Resource Group where your Virtual Network resides."
+            }
+          },
+        "vmSubnetName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define the name of an existing Subnet within your Virtual Network."
+            }
+        },
+        "mysqlRootPwd": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define your desired mySQL root password."
+            }
+        },
+        "guacDBPwd": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define your desired Guacamole database password."
+            }
+        },
+        "certEmailAddress": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "Define your email address to be used with the generation of your Let's Encrypt SSL certificate."
+            }
+        },        
+        "scriptActionUri_nginx": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/bigredthelogger/guacamole/master/nginx-install.sh",
+            "metadata": {
+              "description": "A public http(s) uri that points to a script action that will install Nginx and a Let's Encrypt SSL."
+            }
+        }, 
+        "scriptActionUri_guacamole": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/bigredthelogger/guacamole/master/guac-install.sh",
+            "metadata": {
+              "description": "A public http(s) uri that points to a script action that will install Apache Guacamole."
+            }
+        }
+    },
+    "variables": {
+        "vmName": "[trim(parameters('vmName'))]",
+        "vmDNSPrefix": "[trim(parameters('vmDNSPrefix'))]",
+        "vmSize": "[trim(parameters('vmSize'))]",
+        "vmUsername": "[trim(parameters('vmUsername'))]",
+        "vmSSHPublicKey": "[trim(parameters('vmSSHPublicKey'))]",
+        "vmVnetName": "[trim(parameters('vmVnetName'))]",
+        "vmVnetRG": "[trim(parameters('vmVnetRG'))]",
+        "vmSubnetName": "[trim(parameters('vmSubnetName'))]",
+        "mysqlRootPwd": "[trim(parameters('mysqlRootPwd'))]",
+        "guacDBPwd": "[trim(parameters('guacDBPwd'))]",
+        "certEmailAddress": "[trim(parameters('certEmailAddress'))]",
+        "scriptActionUri_nginx": "[trim(parameters('scriptActionUri_nginx'))]",
+        "scriptActionUri_guacamole": "[trim(parameters('scriptActionUri_guacamole'))]",
+        "vnetID": "[resourceId(variables('vmVnetRG'), 'Microsoft.Network/virtualNetworks', variables('vmVnetName'))]",
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/', variables('vmSubnetName'))]",
+        "osImageSku": "16.04-LTS",
+        "securityGroupName": "[concat(variables('vmName'), '-NSG' )]",
+        "nicName": "[concat(variables('vmName'), '-NIC' )]",
+        "publicIpAddressName": "[concat(variables('vmName'), '-IP' )]",
+        "sshKeyPath": "[concat('/home/', variables('vmUsername'),'/.ssh/authorized_keys')]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIpAddressName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('vmDNSPrefix')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('securityGroupName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Port_22_SSH",
+                        "properties": {
+                            "description": "Allows SSH traffic",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationPortRange": "22",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "Port_80_WEB",
+                        "properties": {
+                            "description": "Allows HTTP traffic",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 101,
+                            "direction": "Inbound"
+                        }
+                    },            
+                    {
+                        "name": "Port_443_SSL",
+                        "properties": {
+                            "description": "Allows HTTPS traffic",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationPortRange": "443",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 102,
+                            "direction": "Inbound"
+                        }
+                    }                
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('nicName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('securityGroupName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                            },
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('securityGroupName'))]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2016-04-30-preview",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('vmName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('vmSize')]"
+                },
+                "osProfile": {
+                    "computerName": "[variables('vmName')]",
+                    "adminUsername": "[variables('vmUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[variables('sshKeyPath')]",
+                                    "keyData": "[variables('vmSSHPublicKey')]"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "[variables('osImageSku')]",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                        }
+                    ]
+                }
+            }
+        },
+
+        {
+            "name": "[concat(variables('vmName'),'/nginx-install')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "comments" : "Stdout and Stderr can be found /var/lib/waagent/custom-script/download/0/",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ],
+            "tags": {
+                "displayName": "nginx-install.sh"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": false,
+              "settings": {
+                "fileUris": [
+                  "[variables('scriptActionUri_nginx')]"
+                ],
+                "commandToExecute": "[concat('bash nginx-install.sh', ' --fqdn ', reference(variables('publicIPAddressName')).dnsSettings.fqdn, ' --email ', variables('certEmailAddress'))]"
+              }
+            }
+        },
+        
+        {
+            "name": "[concat(variables('vmName'),'/guac-install')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "comments" : "Stdout and Stderr can be found /var/lib/waagent/custom-script/download/0/",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ],
+            "tags": {
+                "displayName": "guac-install.sh"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": false,
+              "settings": {
+                "fileUris": [
+                  "[variables('scriptActionUri_guacamole')]"
+                ],
+                "commandToExecute": "[concat('bash guac-install.sh', ' --mysqlpwd ', variables('mysqlRootPwd'), ' --guacpwd ', variables('guacDBPwd'))]"
+              }
+            }
+        }
+
+    ],
+
+    "outputs" : {
+        "vmName" : {
+            "type" : "string",
+            "value" : "[variables('vmName')]"
+        },
+        "vmFQDN" : {
+            "type" : "string",
+            "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+        },                                                                
+        "vmSize" : {
+            "type" : "string",
+            "value": "[variables('vmSize')]"
+        },
+        "vmUsername" : {
+            "type" : "string",
+            "value": "[variables('vmUsername')]"
+        },
+        "vmSSHPublicKey" : {
+            "type" : "string",
+            "value": "[variables('vmSSHPublicKey')]"
+        },
+        "vmVnetName" : {
+            "type" : "string",
+            "value": "[variables('vmVnetName')]"
+        },
+        "vmVnetRG" : {
+            "type" : "string",
+            "value": "[variables('vmVnetRG')]"
+        },
+        "vmSubnetName" : {
+            "type" : "string",
+            "value": "[variables('vmSubnetName')]"
+        },
+        "mysqlRootPwd" : {
+            "type" : "string",
+            "value": "[variables('mysqlRootPwd')]"
+        },
+        "guacDBPwd" : {
+            "type" : "string",
+            "value": "[variables('guacDBPwd')]"
+        },
+        "scriptActionUri_nginx" : {
+            "type" : "string",
+            "value": "[variables('scriptActionUri_nginx')]"
+        },
+        "scriptActionUri_guacamole" : {
+            "type" : "string",
+            "value": "[variables('scriptActionUri_guacamole')]"
+        }        
+    }
+
+}
