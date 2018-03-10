@@ -4,25 +4,24 @@
 GUACVERSION="0.9.14"
 
 # Update apt so we can search apt-cache for newest tomcat version supported
-apt-get update
+apt update
 
 # Get script arguments for non-interactive mode
 while [ "$1" != "" ]; do
     case $1 in
         -m | --mysqlpwd )       shift
-                                mysqlpwd="$1"
+                                argmysqlpwd="$1"
                                 ;;
-        -g | --guacpwd )
-                                shift
-                                guacpwd="$1"
+        -g | --guacpwd )        shift
+                                argguacpwd="$1"
     esac
     shift
 done
 
 # Get MySQL root password and Guacamole User password
-if [ -n "$mysqlpwd" ] && [ -n "$guacpwd" ]; then
-        mysqlrootpassword=$mysqlpwd
-        guacdbuserpassword=$guacpwd
+if [ -n "$argmysqlpwd" ] && [ -n "$argguacpwd" ]; then
+        mysqlrootpassword=$argmysqlpwd
+        guacdbuserpassword=$argguacpwd
 else
     echo 
     while true
