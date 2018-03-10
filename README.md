@@ -6,13 +6,12 @@ Since Guacamole is accessed via your web browser, you can install Guacamole on a
 
 ## Getting Started
 
-This project provides the following components to get you up and running with Apache Guacamole as quickly as possible.
-
-azuredeploy.json
-* Creates a Ubuntu 16.04 virtual machine
-* Creates a public ip address with your specified dns prefix
-* Creates a Network Security Group that allows incoming traffic on ports 22,80,443.
-* *Ports 8080/8443 are proxied via the Nginx server to Tomcat thus they are not required to be open.
+The following will occur as part of the deployment to Microsoft Azure:
+* Creation of a Ubuntu 16.04 virtual machine
+* Creation of a Public IP address with your specified DNS prefix
+* Creation of a Network Security Group that allows incoming traffic on ports 22,80,443.
+  * Ports 8080/8443 are proxied via the Nginx server to Tomcat thus they are not required to be open.
+* Installion Nginx, Tomcat, MySQL, Guacamole, and a free Let's Encrypt SSL certificate
 
 ## Deploy to Azure
 
