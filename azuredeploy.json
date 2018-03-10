@@ -79,6 +79,13 @@
                 "description": "Define your email address to be used with the generation of your Let's Encrypt SSL certificate."
             }
         },        
+        "scriptActionUri_entrypoint": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/bigredthelogger/guacamole/master/install.sh",
+            "metadata": {
+              "description": "A public http(s) uri that points to a script action that will install act as an entry point for nginx-install.sh and guac-install.sh."
+            }
+        },
         "scriptActionUri_nginx": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/bigredthelogger/guacamole/master/nginx-install.sh",
@@ -106,6 +113,7 @@
         "mysqlRootPwd": "[trim(parameters('mysqlRootPwd'))]",
         "guacDBPwd": "[trim(parameters('guacDBPwd'))]",
         "certEmailAddress": "[trim(parameters('certEmailAddress'))]",
+        "scriptActionUri_entrypoint": "[trim(parameters('scriptActionUri_entrypoint'))]",
         "scriptActionUri_nginx": "[trim(parameters('scriptActionUri_nginx'))]",
         "scriptActionUri_guacamole": "[trim(parameters('scriptActionUri_guacamole'))]",
         "vnetID": "[resourceId(variables('vmVnetRG'), 'Microsoft.Network/virtualNetworks', variables('vmVnetName'))]",
@@ -260,16 +268,20 @@
         },
 
         {
-            "name": "[concat(variables('vmName'),'/nginx-install')]",
+            "name": "[concat(variables('vmName'),'/guacamole')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
             "comments" : "Stdout and Stderr can be found /var/lib/waagent/custom-script/download/0/",
             "apiVersion": "2015-06-15",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
+				"[reference(variables('publicIPAddressName')).dnsSettings.fqdn]",
+                "[variables('certEmailAddress')]",
+				"[variables('mysqlRootPwd')]",
+				"[variables('guacDBPwd')]"                
             ],
             "tags": {
-                "displayName": "nginx-install.sh"
+                "displayName": "nginx/tomcat/mysql/guacamole"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
@@ -278,35 +290,9 @@
                 "autoUpgradeMinorVersion": false,
               "settings": {
                 "fileUris": [
-                  "[variables('scriptActionUri_nginx')]"
+                    "[variables('scriptActionUri_entrypoint')]", "[variables('scriptActionUri_nginx')]", "[variables('scriptActionUri_guacamole')]"
                 ],
-                "commandToExecute": "[concat('bash nginx-install.sh', ' --fqdn ', reference(variables('publicIPAddressName')).dnsSettings.fqdn, ' --email ', variables('certEmailAddress'))]"
-              }
-            }
-        },
-        
-        {
-            "name": "[concat(variables('vmName'),'/guac-install')]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "location": "[resourceGroup().location]",
-            "comments" : "Stdout and Stderr can be found /var/lib/waagent/custom-script/download/0/",
-            "apiVersion": "2015-06-15",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-            ],
-            "tags": {
-                "displayName": "guac-install.sh"
-            },
-            "properties": {
-                "publisher": "Microsoft.Azure.Extensions",
-                "type": "CustomScript",
-                "typeHandlerVersion": "2.0",
-                "autoUpgradeMinorVersion": false,
-              "settings": {
-                "fileUris": [
-                  "[variables('scriptActionUri_guacamole')]"
-                ],
-                "commandToExecute": "[concat('bash guac-install.sh', ' --mysqlpwd ', variables('mysqlRootPwd'), ' --guacpwd ', variables('guacDBPwd'))]"
+                "commandToExecute": "[concat('bash install.sh', ' --fqdn ', reference(variables('publicIPAddressName')).dnsSettings.fqdn, ' --email ', variables('certEmailAddress'), ' --mysqlpwd ', variables('mysqlRootPwd'), ' --guacpwd ', variables('guacDBPwd'))]"
               }
             }
         }
