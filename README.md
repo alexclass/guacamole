@@ -38,9 +38,9 @@ The following will occur as part of the deployment to Microsoft Azure:
 
 Custom Script Extensions download and runs scripts on Azure virtual machines. These are useful for post-deployment configuration, software installation, or any other configuration/management task. You can download scripts from Azure Storage or another accessible internet location, or even provide them to the extension at runtime.
 ```
-Note: Only one Custom Script Extension can be assigned to an Azure virtual machine. Either:
-1. Create a single script that executes all your desired commands or
-2. Create an entry point script (reference install.sh in this project) that executes your individual scripts.
+**Tip**: Only a single Custom Script Extension can be assigned to an Azure virtual machine.
+ * Option 1: Create a single script that executes all your desired commands or
+ * Option 2: Create an entry point script (reference install.sh in this project) that executes your individual scripts.
 ```
 References
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/extensions-customscript">Custom Script Extension for Windows</a>
