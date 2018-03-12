@@ -16,10 +16,6 @@ These instructions will get you up and running with Apache Guacamole in no time 
 
 TBD
 
-```
-TBD
-```
-
 ## Deploy to Azure
 
 The following will occur as part of the deployment to Microsoft Azure:
@@ -35,6 +31,15 @@ The following will occur as part of the deployment to Microsoft Azure:
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fbigredthelogger%2Fguacamole%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
+
+## Lessons Learned
+
+Custom Script Extensions download and runs scripts on Azure virtual machines. These are useful for post-deployment configuration, software installation, or any other configuration/management task. You can download scripts from Azure Storage or another accessible internet location, or even provide them to the extension at runtime.
+* <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/extensions-customscript">Custom Script Extension for Windows</a>
+* <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/extensions-customscript">Custom Script Extension for Linux</a>
+```
+Note: You can only have one Custom Script Extension assigned to an Azure virtual machine. As such, you could either: 1. Create multiple modular scripts that are executed via an Entry Point Script (similar to the install.sh in this project) or 2. Create one single script that does everything.
+```
 
 ## Acknowledgments
 
