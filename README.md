@@ -14,7 +14,11 @@ These instructions will get you up and running with Apache Guacamole in no time 
 
 ### Prerequisites
 
-* 
+| Parameter        | Description           | Note  |
+| ------------------------- |:-------------:| -----:|
+| VM Name                   | Define the name of your Apache Guacamole Virtual Machine. |
+| VM DNS Prefix             |   Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error. |
+| VM Size | are neat        |    Define the Compute instance size (e.g. Standard_A2_v2). |
 
 ## Deploy to Azure
 
@@ -62,6 +66,7 @@ You can use cloud-init to install packages and write files, or to configure user
 References
 * <a href="https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/">Custom Data and Cloud-Init on Microsoft Azure</a>
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/using-cloud-init">Cloud-init support for virtual machines in Azure</a>
+* <a href="https://help.ubuntu.com/community/CloudInit">CloudInit Official Documentation</a>
 * <a href="https://github.com/Azure/azure-quickstart-templates/blob/master/1-CONTRIBUTION-GUIDE/best-practices.md">Azure Resource Manager QuickStart Templates</a>
 
 ## Acknowledgments
