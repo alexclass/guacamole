@@ -38,13 +38,27 @@ The following will occur as part of the deployment to Microsoft Azure:
 
 Custom Script Extensions download and runs scripts on Azure virtual machines. These are useful for post-deployment configuration, software installation, or any other configuration/management task. You can download scripts from Azure Storage or another accessible internet location, or even provide them to the extension at runtime.
 ```
-**Tip**: Only a single Custom Script Extension can be assigned to an Azure virtual machine.
- * Option 1: Create a single script that executes all your desired commands or
- * Option 2: Create an entry point script (reference install.sh in this project) that executes your individual scripts.
+Tip: Only a single Custom Script Extension can be assigned to an Azure virtual machine.
+Option 1: Create a single script that executes all your desired commands or
+Option 2: Create an entry point script (reference install.sh in this project) that executes your individual scripts.
 ```
 References
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/extensions-customscript">Custom Script Extension for Windows</a>
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/extensions-customscript">Custom Script Extension for Linux</a>
+
+### 2. Network Security Groups
+
+Be very careful when you want to apply Network Security Groups to both a Azure virtual machine NIC and the subnet at the same time: NSGs are evaluated independently, and an "allow" rule must exist at both levels, otherwise traffic will not be admitted.
+
+References
+* <a href="https://blogs.msdn.microsoft.com/igorpag/2016/05/14/azure-network-security-groups-nsg-best-practices-and-lessons-learned/">Azure Network Security Groups (NSG) – Best Practices and Lessons Learned</a>
+
+### 3. Azure Resource Manager (ARM) Templates
+
+TBD
+
+References
+* <a href="https://github.com/Azure/azure-quickstart-templates/blob/master/1-CONTRIBUTION-GUIDE/best-practices.md">Azure Resource Manager QuickStart Templates</a>
 
 ## Acknowledgments
 
