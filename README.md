@@ -14,7 +14,7 @@ These instructions will get you up and running with Apache Guacamole in no time 
 
 ### Prerequisites
 
-TBD
+* 
 
 ## Deploy to Azure
 
@@ -55,9 +55,13 @@ References
 
 ### 3. Azure Resource Manager (ARM) Templates
 
-TBD
+You can inject a script or other metadata into a Microsoft Azure virtual machine at provision time using a feature called custom data. Custom data needs to be base64-encoded and can contain data such as variables, parameters, scripts, or even cloud-init syntax.
+
+You can use cloud-init to install packages and write files, or to configure users and security on select Linux images (e.g. Ubuntu, CoreOS, and RHEL).
 
 References
+* <a href="https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/">Custom Data and Cloud-Init on Microsoft Azure</a>
+* <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/using-cloud-init">Cloud-init support for virtual machines in Azure</a>
 * <a href="https://github.com/Azure/azure-quickstart-templates/blob/master/1-CONTRIBUTION-GUIDE/best-practices.md">Azure Resource Manager QuickStart Templates</a>
 
 ## Acknowledgments
