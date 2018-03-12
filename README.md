@@ -38,7 +38,9 @@ Custom Script Extensions download and runs scripts on Azure virtual machines. Th
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/windows/extensions-customscript">Custom Script Extension for Windows</a>
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/extensions-customscript">Custom Script Extension for Linux</a>
 ```
-Note: You can only have one Custom Script Extension assigned to an Azure virtual machine. As such, you could either: 1. Create multiple modular scripts that are executed via an Entry Point Script (similar to the install.sh in this project) or 2. Create one single script that does everything.
+Only one Custom Script Extension can be assigned to an Azure virtual machine.
+1. Create a single script that executes all your desired commands; or
+2. Create an entry point script (reference install.sh in this project) that executes your individual scripts.
 ```
 
 ## Acknowledgments
