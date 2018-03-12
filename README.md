@@ -14,11 +14,11 @@ These instructions will get you up and running with Apache Guacamole in no time 
 
 ### Prerequisites
 
-| Parameter        | Description           | Note  |
-| ------------------------- |:-------------:| -----:|
-| VM Name                   | Define the name of your Apache Guacamole Virtual Machine. |
-| VM DNS Prefix             |   Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error. |
-| VM Size | are neat        |    Define the Compute instance size (e.g. Standard_A2_v2). |
+| :Parameter        | :Description           |
+| ------------------------- |:-------------:|
+| :VM Name                   | :Define the name of your Apache Guacamole Virtual Machine. |
+| :VM DNS Prefix             |   :Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error. |
+| :VM Size | are neat        |    :Define the Compute instance size (e.g. Standard_A2_v2). |
 
 ## Deploy to Azure
 
