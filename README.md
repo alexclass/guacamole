@@ -16,20 +16,17 @@ These instructions will get you up and running with Apache Guacamole in no time 
 
 | Parameter                 | Description  |
 | :-------------------------|:-------------|
-| vm Name                   | Define the name of your Apache Guacamole Virtual Machine. |
-| vm DNS Prefix             | Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error. |
-| vm Size                   | Define the Compute instance size (e.g. Standard_A2_v2). |
-| vm Username               | Define the Apache Guacamole Virtual Machine Administrator username.|
-| vm SSH Public Key         | Define the SSH Public Key that will be used for SSH authentication.</br></br>Note</br> You can leverage ssh-keygen (Linux) or PuttyGen (Windows) to generate this.|
-| vm Vnet Name              | Define the name of an existing Virtual Network Name.|
-| vm Vnet RG                | Define the name of the Resource Group where your Virtual Network resides.|
-| vm Subnet Name            | Define the name of an existing Subnet within your Virtual Network.|
-| vm mysql Root Pwd         | Define your desired mySQL root password.|
-| vm guac DB Pwd            | Define your desired Guacamole database password.|
-| vm cert Email Address     | Define your email address to be used with the generation of your Let's Encrypt SSL certificate.|
-| vm Username               | A public http(s) uri that points to a script action that will install act as an entry point for nginx-install.sh and guac-install.sh.|
-| vm Username               | A public http(s) uri that points to a script action that will install Nginx and a Let's Encrypt SSL|
-| vm Username               | A public http(s) uri that points to a script action that will install Apache Guacamole.|
+| Name                   | Define the name of your Apache Guacamole Virtual Machine. |
+| DNS Prefix             | Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error. |
+| Size                   | Define the Compute instance size (e.g. Standard_A2_v2). |
+| Username               | Define the Apache Guacamole Virtual Machine Administrator username.|
+| SSH Public Key         | Define the SSH Public Key that will be used for SSH authentication.</br></br>Note</br> You can leverage ssh-keygen (Linux) or PuttyGen (Windows) to generate this.|
+| Vnet Name              | Define the name of an existing Virtual Network Name.|
+| Vnet RG                | Define the name of the Resource Group where your Virtual Network resides.|
+| Subnet Name            | Define the name of an existing Subnet within your Virtual Network.|
+| Mysql Root Pwd         | Define your desired mySQL root password.|
+| Guac DB Pwd            | Define your desired Guacamole database password.|
+| Cert Email Address     | Define your email address to be used with the generation of your Let's Encrypt SSL certificate.|
 
 ## Deploy to Azure
 
