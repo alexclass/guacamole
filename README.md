@@ -74,15 +74,15 @@ If you would like to customize this template to meet your own specific business 
 * Make a copy of the entry point script <a href="https://raw.githubusercontent.com/bigredthelogger/guacamole/master/install.sh">install.sh</a>.
   * Make your desired changes
   * Upload your new script to a publicly available location (e.g. Github) or your Azure Storage Account
-  * Override the scriptActionUri_entrypoint parameter with the URL to your customized entry point script.
+  * Override the **scriptActionUri_entrypoint** parameter with the URL to your customized entry point script.
 * Make a copy of the Nginx install script <a href="https://raw.githubusercontent.com/bigredthelogger/guacamole/master/nginx-install.sh">nginx-install.sh</a>.
   * Make your desired changes
   * Upload your new script to a publicly available location (e.g. Github) or your Azure Storage Account
-  * Override the scriptActionUri_nginx parameter with the URL to your customized Nginx script.
+  * Override the **scriptActionUri_nginx** parameter with the URL to your customized Nginx script.
 * Make a copy of the Guacamole install script <a href="https://raw.githubusercontent.com/bigredthelogger/guacamole/master/guac-install.sh">guac-install.sh</a>.
   * Make your desired changes
   * Upload your new script to a publicly available location (e.g. Github) or your Azure Storage Account
-  * Override the scriptActionUri_guacamole parameter with the URL to your customized entry point script.
+  * Override the **scriptActionUri_guacamole** parameter with the URL to your customized Guacamole install script.
 
 ## Lessons Learned
 
