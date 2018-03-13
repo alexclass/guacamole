@@ -10,23 +10,45 @@ When the need for a "jump server" arose, I deployed the <a href="https://github.
 
 ## Getting Started
 
-These instructions will get you up and running with Apache Guacamole in no time at all.
+The following instructions will get you up and running with Apache Guacamole in no time at all.
 
 ### Prerequisites
 
+In order to deploy this Azure Resource Manager template you will need provide the following parameters.
+
 | Parameter                 | Description  |
 | :-------------------------|:-------------|
-| Name                   | Define the name of your Apache Guacamole Virtual Machine. |
-| DNS Prefix             | Define the DNS prefix for the assigned the Public IP address. </br></br>Note</br> This field must be lowercase and should match the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error. |
-| Size                   | Define the Compute instance size (e.g. Standard_A2_v2). |
-| Username               | Define the Apache Guacamole Virtual Machine Administrator username.|
-| SSH Public Key         | Define the SSH Public Key that will be used for SSH authentication.</br></br>Note</br> You can leverage ssh-keygen (Linux) or PuttyGen (Windows) to generate this.|
-| Vnet Name              | Define the name of an existing Virtual Network Name.|
-| Vnet RG                | Define the name of the Resource Group where your Virtual Network resides.|
-| Subnet Name            | Define the name of an existing Subnet within your Virtual Network.|
-| Mysql Root Pwd         | Define your desired mySQL root password.|
-| Guac DB Pwd            | Define your desired Guacamole database password.|
-| Cert Email Address     | Define your email address to be used with the generation of your Let's Encrypt SSL certificate.|
+| **Name**                   | Name of your Apache Guacamole Virtual Machine. |
+| **DNS Prefix**             | DNS prefix for the assigned the Public IP address. |
+| **Size**                   | Compute instance size (e.g. Standard_A2_v2). |
+| **Username**               | Apache Guacamole Virtual Machine Administrator username.|
+| **SSH Public Key**         | SSH Public Key that will be used for SSH authentication.|
+| **Vnet Name**              | Name of an existing Virtual Network.|
+| **Vnet RG**                | Name of the Resource Group where your Virtual Network resides.|
+| **Subnet Name**            | Name of an existing Subnet within your Virtual Network.|
+| **Mysql Root Pwd**         | MySQL root password.|
+| **Guac DB Pwd**            | Guacamole database password.|
+| **Cert Email Address**     | Email address to be used with the generation of your Let's Encrypt SSL certificate.|
+
+### Generate your SSH Public Key
+
+The SSH protocol supports many authentication methods. Arguably one of the most important of these is public key authentication for ineractive and automated connections. As such, this Azure Resource Manager template requires the use of SSH public key authentication. In order to generate a Public and Private key, you can use a tool called PuTTYgen (Windows) or ssh-keygen (Linux).
+
+References
+* <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows">Create and use SSH keys on Windows</a>
+* <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys">Create and use SSH keys on Linux or macOS</a>
+
+### Create an Azure Virtual Network
+
+Most of you should already have an Azure Virtual Network with multiple subnets. However, if this is not the case, you can follow the references below to create an Azure Virtual Network.
+
+```
+Tip: You will need to remember the Resource Group that your Virtual Network resides within.
+```
+
+References
+* <a href="https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal">Create a virtual network using the Azure portal</a>
+* <a href="https://docs.microsoft.com/en-ca/azure/virtual-network/quick-create-powershell">Create a virtual network using PowerShell</a>
 
 ## Deploy to Azure
 
