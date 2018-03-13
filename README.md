@@ -58,7 +58,7 @@ The following will occur as part of the deployment to Microsoft Azure:
 * Creation of a Public IP address with your specified DNS prefix
 * Creation of a Network Security Group that allows incoming traffic on ports 22, 80, 443.
   * Ports 8080 and 8443 are proxied via the Nginx server to Tomcat thus they are not required to be open.
-* Installion of Nginx, Tomcat, MySQL, Guacamole, and a Let's Encrypt SSL certificate
+* Installation of Nginx, Tomcat, MySQL, Guacamole, and a Let's Encrypt SSL certificate
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbigredthelogger%2Fguacamole%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
