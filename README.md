@@ -2,7 +2,7 @@
 
 Apache Guacamole is a clientless remote desktop gateway. It supports standard protocols like SSC, Telnet, VNC, and RDP. It is open source and requires no plugins or client software installed. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your remote desktops and servers is a web browser.
 
-Since Guacamole is accessed via your web browser, you can install Guacamole on a Cloud Service Provider (e.g. Microsoft, Amazon, or Google) and access Guacamole through your corporate proxy server. This can enable you to remotley access your Cloud hosted virtual machines without having to configure Firewall Rules or establish a Virtual Private Network.
+Since Guacamole is accessed via your web browser, you can install Guacamole on a Cloud Service Provider (e.g. Microsoft, Amazon, or Google) and access Guacamole through your corporate proxy server. This can enable you to remotely access your Cloud hosted virtual machines without having to configure Firewall Rules or establish a Virtual Private Network.
 
 ## Preface
 
