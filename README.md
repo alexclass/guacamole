@@ -67,6 +67,10 @@ The following will occur as part of the deployment to Microsoft Azure:
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
+### Login to Guacamole and change your password
+
+The default username and password is **guacadmin**/**guacadmin**. Make sure that you login and change this.
+
 ### Customization
 
 If you would like to customize this template to meet your own specific business requirments, you can do so very simply. 
