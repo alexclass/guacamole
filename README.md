@@ -43,14 +43,15 @@ References
 Most of you should already have an Azure Virtual Network with multiple subnets. However, if this is not the case, you can follow the references below to create an Azure Virtual Network.
 
 ```
-Tip: You will need to remember the Resource Group that your Virtual Network resides within.
+Reminder: You will need to remember the Resource Group that your Virtual Network resides within.
 ```
-
 References
 * <a href="https://docs.microsoft.com/en-us/azure/virtual-network/quick-create-portal">Create a virtual network using the Azure portal</a>
 * <a href="https://docs.microsoft.com/en-ca/azure/virtual-network/quick-create-powershell">Create a virtual network using PowerShell</a>
 
-## Deploy to Azure
+### Deploy to Azure
+
+Once you have the answers to each of the rerequisites, you are ready to proceed with deploying this Azure Resource Manager template by clicking the **Deploy to Azure** button below.
 
 The following will occur as part of the deployment to Microsoft Azure:
 * Creation of a Ubuntu 16.04 virtual machine
@@ -65,6 +66,25 @@ The following will occur as part of the deployment to Microsoft Azure:
 <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fbigredthelogger%2Fguacamole%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
+
+### Customization
+
+If you would like to customize this template to meet your own specific business requirments, you can do so very simply. 
+
+* Make a copy of the entry point script <a href="https://raw.githubusercontent.com/bigredthelogger/guacamole/master/install.sh">install.sh</a>.
+ * Make your desired changes
+ * Upload your new script to a publicly available location (e.g. Github) or your Azure Storage Account
+ * Override the scriptActionUri_entrypoint parameter with the URL to your customized entry point script.
+
+* Make a copy of the Nginx install script <a href="https://raw.githubusercontent.com/bigredthelogger/guacamole/master/nginx-install.sh">nginx-install.sh</a>.
+ * Make your desired changes
+ * Upload your new script to a publicly available location (e.g. Github) or your Azure Storage Account
+ * Override the scriptActionUri_nginx parameter with the URL to your customized Nginx script.
+
+* Make a copy of the Guacamole install script <a href="https://raw.githubusercontent.com/bigredthelogger/guacamole/master/guac-install.sh">guac-install.sh</a>.
+ * Make your desired changes
+ * Upload your new script to a publicly available location (e.g. Github) or your Azure Storage Account
+ * Override the scriptActionUri_guacamole parameter with the URL to your customized entry point script.
 
 ## Lessons Learned
 
